@@ -1,7 +1,7 @@
 class apache{
- 
-package { 'httpd':
-  ensure => present,
+
+  package { 'httpd':
+    ensure => present,
   }
   file { '/var/www':
     ensure  => directory,
@@ -12,9 +12,13 @@ package { 'httpd':
   file {'/var/www/html/index.html':
     ensure  => file,
     source => 'puppet:///modules/apache/index.html',
-}
-service { 'httpd':
-    ensure    => running,
+  }
+  file {'/etc/httpd/conf/httpd.conf':
+    ensure => file,
+    require => Package['httpd'],
+  }
+  service { 'httpd':
+    ensure => running,
     subscribe => File['/etc/httpd/conf/httpd.conf'],
-}
+  }
 }
