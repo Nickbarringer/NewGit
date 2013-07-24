@@ -1,5 +1,9 @@
 class apache{
-
+  File {
+    owner => 'apache',
+    group => 'apache',
+    mode  => '0644'
+  }
   package { 'httpd':
     ensure => present,
   }
@@ -14,8 +18,10 @@ class apache{
     source => 'puppet:///modules/apache/index.html',
   }
   file {'/etc/httpd/conf/httpd.conf':
-    ensure => file,
+    ensure  => file,
     require => Package['httpd'],
+    owner   => 'root',
+    group   => 'root'
   }
   service { 'httpd':
     ensure => running,
