@@ -1,5 +1,6 @@
 class apache{
   
+
   case $::operatingsystem { 
     'centos': {$httpd_user="apache" 
                $httpd_group="apache"
